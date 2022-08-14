@@ -1,0 +1,37 @@
+module PlayerInput
+  def initialize
+    puts "Computer picked number #{$number}, what do you chose?"
+    @chosen_num = gets
+  end
+end
+
+class Player
+  include PlayerInput
+  def initialize(name)
+    @name = name
+    puts "Hello #{@name}"
+  end
+
+  def chose 
+    PlayerInput.initialize
+    if @chosen_num < 9 || @chosen_num > 1 then PlayerInput.initialize end
+  end
+end
+
+class Computer
+  def initialize(array)
+    @array = array
+  end
+
+  def pick_num
+    rand_num = rand(1..@array.length)
+    $number = @array[rand_num]
+  end
+end
+
+puts "Enter your name"
+new_name = gets
+player = Player.new(new_name)
+comp = Computer.new((1..9).to_a)
+comp.pick_num
+player.chose
