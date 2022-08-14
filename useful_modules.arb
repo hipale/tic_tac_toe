@@ -1,0 +1,6 @@
+module PlayerInput
+  def initialize
+    puts "Computer picked number #{$number}, what do you chose?"
+    @chosen_num = gets
+  end
+end
