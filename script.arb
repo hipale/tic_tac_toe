@@ -1,37 +1,77 @@
-module PlayerInput
-  def initialize
-    puts "Computer picked number #{$number}, what do you chose?"
-    @chosen_num = gets
+class Board
+  def initialize(pieces)
+    @pieces = pieces
+    $pieces_arr = []
+    i = 1
+    1.upto(pieces) do |piece|
+      piece = i
+      $pieces_arr.push(piece)
+      if piece % 3 == 0 
+        puts "|_#{piece}_|"
+      else print "|_#{piece}_|" end
+      i += 1
+    end
   end
-end
-
-class Player
-  include PlayerInput
-  def initialize(name)
-    @name = name
-    puts "Hello #{@name}"
+  def player_pick(pick)
+    $pick = pick
   end
-
-  def chose 
-    PlayerInput.initialize
-    if @chosen_num < 9 || @chosen_num > 1 then PlayerInput.initialize end
+  def new_board 
+    x = 1
+    for piece in $new_arr
+      if x % 3 == 0 
+        puts "|_#{piece}_|"
+      else print "|_#{piece}_|" end
+        x += 1
+    end
   end
 end
 
 class Computer
-  def initialize(array)
-    @array = array
+  def initialize
+    $rand_num = rand(1..9)
   end
-
-  def pick_num
-    rand_num = rand(1..@array.length)
-    $number = @array[rand_num]
+end
+class Player_Input
+  def initialize(first_round)
+    @first_round = first_round
+  end
+  def state_first_round
+    if @first_round.downcase() == "no"  
+      puts "a"
+    elsif @first_round.downcase() == "yes"  
+      player_first = true 
+      puts player_first
+    end
   end
 end
 
-puts "Enter your name"
-new_name = gets
-player = Player.new(new_name)
-comp = Computer.new((1..9).to_a)
-comp.pick_num
-player.chose
+class Game_score
+  def initialize
+    $new_arr = []
+    puts "You picked #{$pick}, and computer picked #{$rand_num}"
+    for piece in $pieces_arr
+      if piece.to_i == $pick.to_i
+        $new_arr.push("X")
+      elsif piece.to_i == $rand_num.to_i
+        $new_arr.push("0")
+      else $new_arr.push(piece)
+      end
+    end
+    puts $new_arr
+  end
+  def state
+  end
+end
+b = Board.new(9)
+puts "Do you want to go first"
+first_round = gets
+player = Player_Input.new(first_round)
+player.state_first_round
+puts "What number would you like to pick"
+pick = gets
+b.player_pick(pick)
+comp = Computer.new
+game = Game_score.new
+b.new_board
+game.initialize
+b.new_board
