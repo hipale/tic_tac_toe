@@ -34,8 +34,9 @@ class Computer
     if $pick == $rand_num then self.initialize end  #(!)
   end
   def change_num
-    $new_num_arr = $new_arr.select { |element| element.class == Integer}
-    $rand_num = rand($new_num_arr[0]..$new_num_arr.last)
+    @new_num_arr = $new_arr.select { |element| element.class == Integer}
+    puts @new_num_arr
+    $rand_num = rand(@new_num_arr[0]..@new_num_arr.last)
   end
 end
 class Player_Input
@@ -76,6 +77,31 @@ class Game_score
        end
     end
   end
+  def check_if_won
+      if $new_arr[0] == "X" && $new_arr[1] == "X" && $new_arr[2] == "X"
+        puts "You won!"
+      elsif $new_arr[3] == "X" && $new_arr[4] == "X" && $new_arr[5] == "X"
+        puts "You won!"
+      elsif $new_arr[6] == "X" && $new_arr[7] == "X" && $new_arr[8] == "X"
+        puts "You won!"
+      elsif $new_arr[0] == "X" && $new_arr[3] == "X" && $new_arr[6] == "X"
+        puts "You won!"
+      elsif $new_arr[1] == "X" && $new_arr[4] == "X" && $new_arr[7] == "X"
+        puts "You won!"
+      elsif $new_arr[2] == "X" && $new_arr[5] == "X" && $new_arr[8] == "X"
+        puts "You won!"
+      elsif $new_arr[0] == "X" && $new_arr[4] == "X" && $new_arr[8] == "X"
+        puts "You won!"
+      elsif $new_arr[2] == "X" && $new_arr[4] == "X" && $new_arr[6] == "X"
+        puts "You won!" 
+      else puts "What number would you like to pick next"
+        pick = gets
+        b.player_pick(pick)
+        comp.change_num
+        game.new_values
+        game.check_if_won
+        b.new_board end
+  end
 end
 
 b = Board.new(9)
@@ -100,4 +126,5 @@ pick = gets
 b.player_pick(pick)
 comp.change_num
 game.new_values
+game.check_if_won
 b.new_board
