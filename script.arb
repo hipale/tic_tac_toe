@@ -94,13 +94,7 @@ class Game_score
         puts "You won!"
       elsif $new_arr[2] == "X" && $new_arr[4] == "X" && $new_arr[6] == "X"
         puts "You won!" 
-      else puts "What number would you like to pick next"
-        pick = gets
-        b.player_pick(pick)
-        comp.change_num
-        game.new_values
-        game.check_if_won
-        b.new_board end
+      else $more_rounds = true end
   end
 end
 
@@ -128,3 +122,21 @@ comp.change_num
 game.new_values
 game.check_if_won
 b.new_board
+if $more_rounds == true 
+  puts "What number would you like to pick next"
+  pick = gets
+  b.player_pick(pick)
+  comp.change_num
+  game.new_values
+  game.check_if_won
+  b.new_board
+end
+if $more_rounds == true 
+  puts "What number would you like to pick next"
+  pick = gets
+  b.player_pick(pick)
+  comp.change_num
+  game.new_values
+  game.check_if_won
+  b.new_board
+end
