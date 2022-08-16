@@ -1,3 +1,4 @@
+$new_arr = []
 class Board
   def initialize(pieces)
     @pieces = pieces
@@ -30,6 +31,11 @@ class Computer
   def initialize
     $rand_num = rand(1..9)
   end
+  def change_num
+    $new_num_arr = $new_arr.select { |element| element.class == Integer}
+    $rand_num = rand($new_num_arr[0]..$new_num_arr.last)
+    puts $rand_num
+  end
 end
 class Player_Input
   def initialize(first_round)
@@ -47,7 +53,6 @@ end
 
 class Game_score
   def initialize
-    $new_arr = []
     puts "You picked #{$pick}, and computer picked #{$rand_num}"
     for piece in $pieces_arr
       if piece.to_i == $pick.to_i
@@ -57,9 +62,10 @@ class Game_score
       else $new_arr.push(piece)
       end
     end
-    puts $new_arr
+    puts $new_arr 
   end
   def state
+
   end
 end
 b = Board.new(9)
@@ -73,5 +79,7 @@ b.player_pick(pick)
 comp = Computer.new
 game = Game_score.new
 b.new_board
-game.initialize
+puts "What number would you like to pick next"
+pick = gets
 b.new_board
+comp.change_num
