@@ -37,7 +37,11 @@ class Computer
   end
   def change_num
     @new_num_arr = $new_arr.select { |element| element.class == Integer}
-    $rand_num = rand(@new_num_arr[0]..@new_num_arr.last)
+    $rand_num = @new_num_arr.shuffle.first()
+    while $pick == $rand_num
+    $rand_num = @new_num_arr.shuffle.first()
+    end
+    puts "the rng is #{$rand_num}"
   end
 end
 class Player_Input
@@ -61,7 +65,7 @@ class Game_score
       if piece.to_i == $pick.to_i
         $new_arr.push("X")
       elsif piece.to_i == $rand_num.to_i
-        $new_arr.push("0")
+        $new_arr.push("O")
       else $new_arr.push(piece)
       end
     end
@@ -72,7 +76,7 @@ class Game_score
         if piece == $pick.to_i
           $new_arr.push("X")
         elsif piece == $rand_num
-          $new_arr.push("0")
+          $new_arr.push("O")
         else $new_arr.push(piece)
         end
        end
@@ -96,21 +100,21 @@ class Game_score
         puts "You won!"
       elsif $new_arr[2] == "X" && $new_arr[4] == "X" && $new_arr[6] == "X"
         puts "You won!" 
-      elsif $new_arr[0] == "0" && $new_arr[1] == "0" && $new_arr[2] == "0"
+      elsif $new_arr[0] == "O" && $new_arr[1] == "O" && $new_arr[2] == "O"
         puts "You Lost"
-      elsif $new_arr[3] == "0" && $new_arr[4] == "0" && $new_arr[5] == "0"
+      elsif $new_arr[3] == "O" && $new_arr[4] == "O" && $new_arr[5] == "O"
         puts "You Lost"
-      elsif $new_arr[6] == "0" && $new_arr[7] == "0" && $new_arr[8] == "0"
+      elsif $new_arr[6] == "O" && $new_arr[7] == "O" && $new_arr[8] == "O"
         puts "You Lost"
-      elsif $new_arr[0] == "0" && $new_arr[3] == "0" && $new_arr[6] == "0"
+      elsif $new_arr[0] == "O" && $new_arr[3] == "O" && $new_arr[6] == "O"
         puts "You Lost"
-      elsif $new_arr[1] == "0" && $new_arr[4] == "0" && $new_arr[7] == "0"
+      elsif $new_arr[1] == "O" && $new_arr[4] == "O" && $new_arr[7] == "O"
         puts "You Lost"
-      elsif $new_arr[2] == "0" && $new_arr[5] == "0" && $new_arr[8] == "0"
+      elsif $new_arr[2] == "O" && $new_arr[5] == "O" && $new_arr[8] == "O"
         puts "You Lost"
-      elsif $new_arr[0] == "0" && $new_arr[4] == "0" && $new_arr[8] == "0"
+      elsif $new_arr[0] == "O" && $new_arr[4] == "O" && $new_arr[8] == "O"
         puts "You Lost"
-      elsif $new_arr[2] == "0" && $new_arr[4] == "0" && $new_arr[6] == "0"
+      elsif $new_arr[2] == "O" && $new_arr[4] == "O" && $new_arr[6] == "O"
         puts "You Lost"
       else $more_rounds = true end
   end
@@ -134,7 +138,8 @@ comp.change_num
 game.new_values
 game.check_if_won
 b.new_board
-while $more_rounds == true
+num_of_rounds = 0
+while $more_rounds == true && num_of_rounds <= 5
   puts "What number would you like to pick next"
   pick = gets
   b.player_pick(pick)
@@ -142,4 +147,5 @@ while $more_rounds == true
   game.new_values
   game.check_if_won
   b.new_board
+  num_of_rounds +=1
 end
