@@ -31,11 +31,12 @@ end
 class Computer
   def initialize 
     $rand_num = rand(1..9)
-    if $pick == $rand_num then self.initialize end  #(!)
+    while $pick == $rand_num 
+      $rand_num = rand(1..9)
+     end  #(!)
   end
   def change_num
     @new_num_arr = $new_arr.select { |element| element.class == Integer}
-    puts @new_num_arr
     $rand_num = rand(@new_num_arr[0]..@new_num_arr.last)
   end
 end
@@ -68,9 +69,9 @@ class Game_score
       $new_arr = []
       puts "You picked #{$pick}, and computer picked #{$rand_num}"
       for piece in $pieces_arr
-        if piece.to_i == $pick.to_i
+        if piece == $pick.to_i
           $new_arr.push("X")
-        elsif piece.to_i == $rand_num.to_i
+        elsif piece == $rand_num
           $new_arr.push("0")
         else $new_arr.push(piece)
         end
@@ -78,6 +79,7 @@ class Game_score
     end
   end
   def check_if_won
+      $more_rounds = false
       if $new_arr[0] == "X" && $new_arr[1] == "X" && $new_arr[2] == "X"
         puts "You won!"
       elsif $new_arr[3] == "X" && $new_arr[4] == "X" && $new_arr[5] == "X"
@@ -94,6 +96,22 @@ class Game_score
         puts "You won!"
       elsif $new_arr[2] == "X" && $new_arr[4] == "X" && $new_arr[6] == "X"
         puts "You won!" 
+      elsif $new_arr[0] == "0" && $new_arr[1] == "0" && $new_arr[2] == "0"
+        puts "You Lost"
+      elsif $new_arr[3] == "0" && $new_arr[4] == "0" && $new_arr[5] == "0"
+        puts "You Lost"
+      elsif $new_arr[6] == "0" && $new_arr[7] == "0" && $new_arr[8] == "0"
+        puts "You Lost"
+      elsif $new_arr[0] == "0" && $new_arr[3] == "0" && $new_arr[6] == "0"
+        puts "You Lost"
+      elsif $new_arr[1] == "0" && $new_arr[4] == "0" && $new_arr[7] == "0"
+        puts "You Lost"
+      elsif $new_arr[2] == "0" && $new_arr[5] == "0" && $new_arr[8] == "0"
+        puts "You Lost"
+      elsif $new_arr[0] == "0" && $new_arr[4] == "0" && $new_arr[8] == "0"
+        puts "You Lost"
+      elsif $new_arr[2] == "0" && $new_arr[4] == "0" && $new_arr[6] == "0"
+        puts "You Lost"
       else $more_rounds = true end
   end
 end
@@ -114,24 +132,9 @@ pick = gets
 b.player_pick(pick)
 comp.change_num
 game.new_values
-b.new_board
-puts "What number would you like to pick next"
-pick = gets
-b.player_pick(pick)
-comp.change_num
-game.new_values
 game.check_if_won
 b.new_board
-if $more_rounds == true 
-  puts "What number would you like to pick next"
-  pick = gets
-  b.player_pick(pick)
-  comp.change_num
-  game.new_values
-  game.check_if_won
-  b.new_board
-end
-if $more_rounds == true 
+while $more_rounds == true
   puts "What number would you like to pick next"
   pick = gets
   b.player_pick(pick)
