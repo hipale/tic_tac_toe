@@ -13,9 +13,6 @@ class Board
       i += 1
     end
   end
-  def player_pick(pick)
-    $pick = pick
-  end
   def new_board 
     x = 1
     for piece in $new_arr
@@ -30,17 +27,15 @@ end
 
 class Computer
   def initialize 
-    $rand_num = rand(1..9)
-    while $pick == $rand_num 
+    $rand_num = 5
+    while $pick.to_i == $rand_num 
       $rand_num = rand(1..9)
-     end  #(!)
+    end
   end
   def change_num
     @new_num_arr = $new_arr.select { |element| element.class == Integer}
+    @new_num_arr = @new_num_arr - [$pick.to_i]
     $rand_num = @new_num_arr.shuffle.first()
-    while $pick == $rand_num
-    $rand_num = @new_num_arr.shuffle.first()
-    end
     puts "the rng is #{$rand_num}"
   end
 end
@@ -55,6 +50,9 @@ class Player_Input
       player_first = true 
       puts player_first
     end
+  end
+  def player_pick(pick)
+    $pick = pick
   end
 end
 
@@ -127,22 +125,22 @@ player = Player_Input.new(first_round)
 player.state_first_round
 puts "What number would you like to pick"
 pick = gets
-b.player_pick(pick)
+player.player_pick(pick)
 comp = Computer.new
 game = Game_score.new
 b.new_board
 puts "What number would you like to pick next"
 pick = gets
-b.player_pick(pick)
+player.player_pick(pick)
 comp.change_num
 game.new_values
 game.check_if_won
 b.new_board
 num_of_rounds = 0
-while $more_rounds == true && num_of_rounds <= 5
+while $more_rounds == true && num_of_rounds <= 2
   puts "What number would you like to pick next"
   pick = gets
-  b.player_pick(pick)
+  player.player_pick(pick)
   comp.change_num
   game.new_values
   game.check_if_won
