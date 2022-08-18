@@ -53,6 +53,10 @@ class Player_Input
   end
   def player_pick(pick)
     $pick = pick
+      while $pieces_arr.all? {|piece| piece != $pick.to_i}
+        puts "What number would you like to pick"
+        $pick = gets
+      end
   end
 end
 
@@ -81,40 +85,20 @@ class Game_score
     end
   end
   def check_if_won
-      $more_rounds = false
-      if $new_arr[0] == "X" && $new_arr[1] == "X" && $new_arr[2] == "X"
-        puts "You won!"
-      elsif $new_arr[3] == "X" && $new_arr[4] == "X" && $new_arr[5] == "X"
-        puts "You won!"
-      elsif $new_arr[6] == "X" && $new_arr[7] == "X" && $new_arr[8] == "X"
-        puts "You won!"
-      elsif $new_arr[0] == "X" && $new_arr[3] == "X" && $new_arr[6] == "X"
-        puts "You won!"
-      elsif $new_arr[1] == "X" && $new_arr[4] == "X" && $new_arr[7] == "X"
-        puts "You won!"
-      elsif $new_arr[2] == "X" && $new_arr[5] == "X" && $new_arr[8] == "X"
-        puts "You won!"
-      elsif $new_arr[0] == "X" && $new_arr[4] == "X" && $new_arr[8] == "X"
-        puts "You won!"
-      elsif $new_arr[2] == "X" && $new_arr[4] == "X" && $new_arr[6] == "X"
-        puts "You won!" 
-      elsif $new_arr[0] == "O" && $new_arr[1] == "O" && $new_arr[2] == "O"
-        puts "You Lost"
-      elsif $new_arr[3] == "O" && $new_arr[4] == "O" && $new_arr[5] == "O"
-        puts "You Lost"
-      elsif $new_arr[6] == "O" && $new_arr[7] == "O" && $new_arr[8] == "O"
-        puts "You Lost"
-      elsif $new_arr[0] == "O" && $new_arr[3] == "O" && $new_arr[6] == "O"
-        puts "You Lost"
-      elsif $new_arr[1] == "O" && $new_arr[4] == "O" && $new_arr[7] == "O"
-        puts "You Lost"
-      elsif $new_arr[2] == "O" && $new_arr[5] == "O" && $new_arr[8] == "O"
-        puts "You Lost"
-      elsif $new_arr[0] == "O" && $new_arr[4] == "O" && $new_arr[8] == "O"
-        puts "You Lost"
-      elsif $new_arr[2] == "O" && $new_arr[4] == "O" && $new_arr[6] == "O"
-        puts "You Lost"
-      else $more_rounds = true end
+      for sign in ["O", "X"]
+        $more_rounds = false
+        if $new_arr[0] == sign && $new_arr[1] == sign && $new_arr[2] == sign ||
+           $new_arr[3] == sign && $new_arr[4] == sign && $new_arr[5] == sign ||
+           $new_arr[6] == sign && $new_arr[7] == sign && $new_arr[8] == sign ||
+           $new_arr[0] == sign && $new_arr[3] == sign && $new_arr[6] == sign ||
+           $new_arr[1] == sign && $new_arr[4] == sign && $new_arr[7] == sign ||
+           $new_arr[2] == sign && $new_arr[5] == sign && $new_arr[8] == sign ||
+           $new_arr[0] == sign && $new_arr[4] == sign && $new_arr[8] == sign ||
+           $new_arr[2] == sign && $new_arr[4] == sign && $new_arr[6] == sign
+           if sign == "O" then puts "You LOST"
+           else puts "You WON!" end
+        else $more_rounds = true end
+      end
   end
 end
 
@@ -123,6 +107,7 @@ puts "Do you want to go first" #(!)
 first_round = gets
 player = Player_Input.new(first_round)
 player.state_first_round
+pick = 0
 puts "What number would you like to pick"
 pick = gets
 player.player_pick(pick)
