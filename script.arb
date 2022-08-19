@@ -44,9 +44,10 @@ class Player_Input
   end
   def state_first_round
     if @first_round == 2  
-      $sign_arr = ["O", "X"]
-    else 
       $sign_arr = ["X", "O"]
+      $comp_first = 1
+    else 
+      $sign_arr = ["O", "X"]
     end
   end
   def player_pick(pick)
@@ -83,7 +84,7 @@ class Game_score
     end
   end
   def check_if_won
-      for sign in $sign_arr
+      for sign in ["X", "O"]
         $more_rounds = false
         if $new_arr[0] == sign && $new_arr[1] == sign && $new_arr[2] == sign ||
            $new_arr[3] == sign && $new_arr[4] == sign && $new_arr[5] == sign ||
@@ -93,10 +94,11 @@ class Game_score
            $new_arr[2] == sign && $new_arr[5] == sign && $new_arr[8] == sign ||
            $new_arr[0] == sign && $new_arr[4] == sign && $new_arr[8] == sign ||
            $new_arr[2] == sign && $new_arr[4] == sign && $new_arr[6] == sign
-           if sign == "O" then puts "You LOST"
-           else puts "You WON!" end
+           if sign == "O" then @show_sign = "You LOST"
+           else @show_sign = "You WON!" end
         else $more_rounds = true end
       end
+      puts @show_sign
   end
 end
 
@@ -105,12 +107,22 @@ puts "Do you want to go first[1] or no[2]" #(!)
 first_round = gets
 player = Player_Input.new(first_round)
 player.state_first_round
+if $sign_arr == ["X", "O"] 
+  comp = Computer.new
+  game = Game_score.new
+  b.new_board
+end
 pick = 0
 puts "What number would you like to pick"
 pick = gets
 player.player_pick(pick)
-comp = Computer.new
-game = Game_score.new
+if $sign_arr == ["X", "O"] 
+  comp.change_num
+  game.new_values
+else
+  comp = Computer.new
+  game = Game_score.new
+end
 b.new_board
 puts "What number would you like to pick next"
 pick = gets
