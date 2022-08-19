@@ -89,7 +89,7 @@ class Game_score
     $comp_first == 1 ? @sign_arr = ["O", "X"] : @sign_arr = ["X", "O"]
   end
   def check_if_won
-      for sign in @sign_arr
+      for sign in ["O", "X"]
         $more_rounds = false
         if $new_arr[0] == sign && $new_arr[1] == sign && $new_arr[2] == sign ||
            $new_arr[3] == sign && $new_arr[4] == sign && $new_arr[5] == sign ||
