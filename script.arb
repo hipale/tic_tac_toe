@@ -72,7 +72,10 @@ class Game_score
     end
     def new_values
       $new_arr = []
-      puts "You picked #{$pick}, and computer picked #{$rand_num}"
+      if $sign_arr == ["X", "O"] 
+        puts "Computer picked #{$rand_num}"
+      else
+      puts "You picked #{$pick}, and computer picked #{$rand_num}" end
       for piece in $pieces_arr
         if piece == $pick.to_i
           $new_arr.push("X")
@@ -84,7 +87,7 @@ class Game_score
     end
   end
   def check_if_won
-      for sign in ["X", "O"]
+      for sign in ["O", "X"]
         $more_rounds = false
         if $new_arr[0] == sign && $new_arr[1] == sign && $new_arr[2] == sign ||
            $new_arr[3] == sign && $new_arr[4] == sign && $new_arr[5] == sign ||
